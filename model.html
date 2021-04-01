@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+<body style="background-color:black;">
+
+<style>
+
+
+
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
+</style>
+
+<script src="pixi.min.js"></script>
+
+
+<script>
+
+let alienImages = ["images/model1.jpg","images/model2.jpg"];
+let textureArray = [];
+
+for (let i=0; i < 2; i++)
+{
+     let texture = PIXI.Texture.from(alienImages[i]);
+     textureArray.push(texture);
+};
+
+function blink(){
+
+
+img.stop();
+
+
+}
+setInterval(blink,100);
+
+function blink2(){
+
+
+img.play();
+
+
+}
+setInterval(blink2,1000);
+
+let app = new PIXI.Application({width: screen.height/4.5, height: screen.height/4.5});
+document.body.appendChild(app.view);
+
+
+let img = new PIXI.AnimatedSprite(textureArray);
+img.width = screen.height/4.5;
+img.height = screen.height/4.5;
+img.animationSpeed = 0.5;
+blink();
+blink2();
+app.stage.addChild(img);
+
+depthMap = new PIXI.Sprite.from("images/modelmap.jpg");
+depthMap.width = screen.height/4.5;
+depthMap.height = screen.height/4.5;
+app.stage.addChild(depthMap);
+        
+displacementFilter = new PIXI.filters.DisplacementFilter(depthMap);
+app.stage.filters = [displacementFilter];
+displacementFilter.scale.x = 0;
+displacementFilter.scale.y = 0;
+//refresh();
+//moveleft();
+
+//var left = 0;
+
+//function refresh(){
+
+//displacementFilter.scale.x = left;
+//displacementFilter.scale.y = 0;
+
+//console.log(left);
+
+//}
+
+//setInterval(refresh,1);
+
+
+//function moveleft(){
+
+//while(left<11){
+
+//left = left + 0.1;
+
+//}
+
+
+//}
+
+//setInterval(moveleft,100);
+
+window.onmousemove = function(e) {
+  displacementFilter.scale.x = (window.innerWidth / 2 - e.clientX) /20;
+  displacementFilter.scale.y = (window.innerHeight / 2 - e.clientY) /20;
+};
+
+
+
+</script>
+
+
+
+</body>
+</html>
